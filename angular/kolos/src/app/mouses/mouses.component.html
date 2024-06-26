@@ -1,0 +1,64 @@
+<div class="container">
+  <button (click)="toggle()">
+    {{ showForm ? "Anuluj dodawanie myszki" : "Dodaj myszkę" }}
+  </button>
+
+  <div *ngIf="showForm">
+    <h2>Dodaj myszke</h2>
+    <form (ngSubmit)="onSubmit()" #mouseForm="ngForm">
+      <div class="form-group">
+        <label for="model">Model:</label>
+        <input
+          type="text"
+          id="model"
+          name="model"
+          class="form-control"
+          required
+          [(ngModel)]="nowa.model"
+        />
+      </div>
+      <div class="form-group">
+        <label for="dpi">DPI:</label>
+        <input
+          type="number"
+          id="dpi"
+          name="dpi"
+          class="form-control"
+          required
+          [(ngModel)]="nowa.dpi"
+        />
+      </div>
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="!mouseForm.form.valid"
+      >
+        Dodaj
+      </button>
+    </form>
+  </div>
+
+  <div *ngIf="!showForm">
+    <h2>Tablica Myszek</h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Model</th>
+          <th>DPI</th>
+          <th>Usuwanie</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let mouse of mice">
+          <td>{{ mouse.id }}</td>
+          <td>{{ mouse.model }}</td>
+          <td>{{ mouse.dpi }}</td>
+          <td>
+            <button (click)="deleteMouse(mouse.id)">Usuń</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
